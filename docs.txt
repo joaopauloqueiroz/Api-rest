@@ -1,0 +1,2 @@
+MidleWare: ele intercepta a parte de resquisição entre o controler e a rota
+pra saber se precisa saber se esta logado ou não para aceitar a requisição, antes de chegar no controller

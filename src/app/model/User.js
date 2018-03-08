@@ -1,5 +1,5 @@
 //acessa a database
-const mongoose = require('../database');
+const mongoose = require('../../database');
 
 //immportar a biblioteca para criptografar a senha
 const bcrypt = require('bcryptjs');
@@ -20,6 +20,15 @@ const UserSchema = new mongoose.Schema({
 		require: true,
 		select: false, //quando der select essa informação não será mostrada no select do usuario
 	},
+	passwordResetToken: {
+		type: String,
+		select: false,
+
+	},
+	passwordResetExpired:{
+		type: Date,
+		select: false, 
+	},
 	createdAt:{
 		type: Date,
 		default: Date.now,
@@ -35,7 +44,6 @@ UserSchema.pre('save', async function(next){
 	this.password = hash;
 	next();
 });
-
 
 //define o model, com o nome do model e o schema a (tabela)
 const User = mongoose.model('User', UserSchema);

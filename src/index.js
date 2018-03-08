@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 });*/
 
 //repassando o app por que vou precisar reutilizalo, a mesma classe em outras classes
-require('./controller/authControler')(app);
+require('./app/controller/index')(app);
+
 
 
 app.listen(3000);
