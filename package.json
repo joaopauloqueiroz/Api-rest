@@ -15,7 +15,7 @@
     "fs": "file:node_modules/fs",
     "jsonwebtoken": "^8.2.0",
     "mongodb": "~3.0.3",
-    "mongoose": "~4.10.8",
+    "mongoose": "^4.10.8",
     "nodemailer": "^4.6.2",
     "nodemailer-express-handlebars": "^3.0.0",
     "path": "file:node_modules/path"
