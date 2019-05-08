@@ -50,7 +50,7 @@ router.post("/register", async (req, res) => {
     });
   } catch (err) {
     console.log(err)
-    return res.status(400).send({ error: "Falha ao registrar" });
+    return res.status(400).send({ error: "Register failed" });
   }
 });
 
@@ -62,7 +62,7 @@ router.post("/authenticate", async (req, res) => {
   //mas preciso dele para validar, saber se o email e dele realmente, então adiciono esse select no final
   const user = await User.findOne(email);
   //verificar se o usuario existe se não
-  if (!user) return res.status(400).send({ error: "Usuario not found!" });
+  if (!user) return res.status(400).send({ error: "User not found!" });
   //verificar se a senha e realmente do email
   //await por que demora então ela não e async por isso precisa
   //bcrypt.compare() por que a senha foi criptografada então tem que comparar com a cript.
@@ -84,7 +84,7 @@ router.put("/update", middleware, async (req, res, next) => {
   let data = req.body
   
   const user = await User.find(id)
-  if (!user) return res.status(400).send({ error: "Usuario not found!" })
+  if (!user) return res.status(400).send({ error: "User not found!" })
 
   //others modifications
   user.name = data.name;
@@ -101,7 +101,7 @@ router.post("/forgot_password", async (req, res) => {
   try {
     const user = await User.findOne( email );
 
-    if (!user) return res.status(400).send({ error: "Usuario não encontrado" });
+    if (!user) return res.status(400).send({ error: "User not found" });
 
     //preciso gerar um token , por que não e qualquer pessoa que pode acessar a pagina de redefinir a senha
     const token = crypto.randomBytes(20).toString("hex");
@@ -128,14 +128,14 @@ router.post("/forgot_password", async (req, res) => {
         if (err) console.log(err);
         return res
           .status(400)
-          .send({ error: "Não foi possivel enviar o email" });
+          .send({ error: "Not posible send email" });
 
         return res.send(err);
       }
     );
   } catch (err) {
     console.log(err)
-    res.status(400).send({ error: "Erro tente mais tarde" });
+    res.status(400).send({ error: "Erro try again later" });
   }
 });
 
