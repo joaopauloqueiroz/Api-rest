@@ -13,17 +13,16 @@ var transport = nodemailer.createTransport({
   port,
   auth: { user, pass }
 });
-
 //configuração handlebars
 transport.use(
-  "compile",
+  'compile',
   hbs({
     //padrão
-    viewEngine: "hadlebars",
+    viewEngine: 'hadlebars',
     //onde vai ficar os templates - pasta resourse
-    viewPath: path.resolve("resource/mail/"),
+    viewPath: path.resolve('resource/mail/'),
     //nome da extençaõ
-    extName: ".html"
+    extName: '.html'
   })
 );
 

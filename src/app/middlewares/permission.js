@@ -41,8 +41,12 @@ module.exports = (req, res, next) => {
     if (err) return res.status(401).send({ error: "Token invalido" });
 
     //caso de decoded
-    req.userId = decoded.id;
-    req.admin = decoded.admin;
+    req.userId = decoded.id;    
+
+    if(!decoded.admin)
+    	return res.status(401).send({ error: "Permission denaied" });
+    
+    req.admin = decoded.admin
     //chama o next para ir pro proximo passo
     return next();
   });

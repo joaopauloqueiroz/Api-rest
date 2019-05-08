@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
+const neo4j = require('neo4j-driver').v1;
+//criar a conexao com o baanco
 
-//conecta no banco de dados, noderest e o nome do banco 
-mongoose.connect('mongodb://localhost/noderest', { useMongoCliente: true });
-//definir a classe que vai usar (e padrão);
-mongoose.Promisse = global.Promise;
-//exportar o modulo para que eu possa usa-lo em outras classes
-module.exports = mongoose;
+const driver = neo4j.driver('bolt://127.0.0.1:7687', neo4j.auth.basic('neo4j', '180461thalita'));
+const session = driver.session();
+
+module.exports = {driver, session}
