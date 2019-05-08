@@ -1,5 +1,5 @@
 //executar a query
-const {create, findOne, findAll, updateProd, deleteProd} = require('./FunctionsProducts.js')
+const {create, findOne, findAll, updateProd, deleteProd, find} = require('./FunctionsProducts.js')
 //exportar o model para usar em outra classe
 
 module.exports = {
@@ -11,6 +11,10 @@ module.exports = {
   },
   findAll: async () => {
     return await findAll()
+  },
+  
+  find: async (id) => {
+    return await find(id)
   },
 
   updateProd: async (id, data) => {

@@ -20,6 +20,9 @@ const router = express.Router();
 //config com o hash para gerar o token
 const authConfig = require("../../config/auth");
 
+//para que seja feito o update do usuario ele precisa estar logado
+const middleware = require("../middlewares/auth")
+
 //function para gerar o token
 function generateToken(params) {
   return jwt.sign(params, authConfig.secret, {
@@ -76,6 +79,20 @@ router.post("/authenticate", async (req, res) => {
   });
 });
 
+router.put("/update", middleware, async (req, res, next) => {
+  const id = req.userId
+  let data = req.body
+  
+  const user = await User.find(id)
+  if (!user) return res.status(400).send({ error: "Usuario not found!" })
+
+  //others modifications
+  user.name = data.name;
+
+  let Users = await User.updateUser(user)
+  res.send(Users)
+})
+
 //rota esqueci minha senha
 router.post("/forgot_password", async (req, res) => {
   //recebe o email
@@ -98,8 +115,6 @@ router.post("/forgot_password", async (req, res) => {
         passwordResetToken: token,
         passwordResetExpired: now
       });
-
-    console.log(email)
 
     //disparar o email
     mailer.sendMail(

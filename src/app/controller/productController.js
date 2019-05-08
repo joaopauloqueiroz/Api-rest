@@ -22,6 +22,16 @@ router.get("/all", async (req, res, next) => {
 	res.send(Products)
 })
 
+router.post("/find", async (req, res, next) => {
+	const {id} = req.body
+
+	if(isNaN(id) || id === '')
+		return res.status(400).send({ error: "Id is not defined" })
+
+	let Products = await Product.find(id)
+	res.send(Products)
+})
+
 router.put("/update", async (req, res, next) => {
 	const {id} = req.body
 

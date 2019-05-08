@@ -56,5 +56,44 @@ module.exports = {
 			  .catch(function (error) {
 			    console.log(error);
 			  });
-	}
+	},
+
+	updateUser: async (email, data) => {
+		return await session
+		  .run('MATCH (u:User {email: $email}) SET u= $fields RETURN u', {fields: data, email: email})
+			  .then(function (result) {
+				  	if(result.records[0]){
+				  		let user = result.records[0].get('u');
+					  		return ({
+					    	id: user.identity.low,
+					    	...user.properties
+					    })
+			  	}
+			    return false;
+			    session.close();
+			  })
+			  .catch(function (error) {
+			    console.log(error);
+			  });
+	},
+
+	//find user for id
+	find: async (id) => {
+		return await session
+		  .run('MATCH (u:User) WHERE id(u) = '+id+' RETURN u')
+			  .then(function (result) {
+				  	if(result.records[0]){
+				  		let user = result.records[0].get('u');
+					  		return ({
+					    	id: user.identity.low,
+					    	...user.properties
+					    })
+			  	}
+			    return false;
+			    session.close();
+			  })
+			  .catch(function (error) {
+			    console.log(error);
+			  });
+	},
 }

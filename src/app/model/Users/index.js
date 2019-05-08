@@ -1,7 +1,7 @@
 //immportar a biblioteca para criptografar a senha
 const bcrypt = require("bcryptjs");
 //executar a query
-const {create, findOne, findByIdAndUpdate} = require('./FunctionsUsers.js')
+const {create, findOne, findByIdAndUpdate, updateUser, find} = require('./FunctionsUsers.js')
 //exportar o model para usar em outra classe
 
 module.exports = {
@@ -16,6 +16,16 @@ module.exports = {
 
   findByIdAndUpdate: async (param, data) => {
     return await findByIdAndUpdate(param, data)
+  },
+
+  updateUser: async (data) => {
+    let email = data.email
+    delete email.email
+    return await updateUser(email, data)
+  },
+
+  find: async (id) => {
+    return await find(id)
   }
 }
 

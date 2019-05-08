@@ -37,6 +37,25 @@ module.exports = {
 			  });
 	},
 
+	find: async (id) => {
+		return await session
+		  .run('MATCH (p:Product) WHERE id(p) = '+id+' RETURN p')
+			  .then(function (result) {
+				  	if(result.records[0]){
+				  		let product = result.records[0].get('p');
+					  		return ({
+					    	id: product.identity.low,
+					    	...product.properties
+					    })
+			  	}
+			    return false;
+			    session.close();
+			  })
+			  .catch(function (error) {
+			    console.log(error);
+			  });
+	},
+
 	findAll: async () => {
 		return await session
 		  .run('MATCH (p:Product) RETURN p')
