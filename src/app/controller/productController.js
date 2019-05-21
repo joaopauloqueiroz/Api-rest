@@ -7,7 +7,7 @@ const Product = require("../model/Products/");
 
 router.use(middleware)
 
-router.get("/create", permission, async (req, res, next) => {
+router.post("/create", permission, async (req, res, next) => {
 	const { name } = req.body;
 
 	if(await Product.findOne(name))

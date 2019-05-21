@@ -11,12 +11,13 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.18.2",
+    "cors": "^2.8.5",
     "express": "~4.16.2",
     "jsonwebtoken": "^8.2.0",
     "mongodb": "~3.0.3",
     "mongoose": "^4.10.8",
+    "neo4j-driver": "^1.7.2",
     "nodemailer": "^4.6.2",
-    "nodemailer-express-handlebars": "^3.0.0",
-    "neo4j-driver": "^1.7.2"
+    "nodemailer-express-handlebars": "^3.0.0"
   }
 }

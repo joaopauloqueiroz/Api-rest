@@ -6,7 +6,6 @@ const authConfig = require("../../config/auth.json");
 module.exports = (req, res, next) => {
   //primeiro eu pego esse header (authorization), para saber se e true or false
   const authHeader = req.headers.authorization;
-
   //verifica se o token foi passado na requisição
   if (!authHeader)
     return res.status(401).send({ error: "O token não foi informado" });
