@@ -1,0 +1,15 @@
+/*
+    Css do component de voltar
+*/
+
+.btn_voltar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: cadetblue;
+    font-weight: bold;
+    font-family: din-condensed, sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    width: 5%;
+}
