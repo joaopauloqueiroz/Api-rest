@@ -1,24 +1,24 @@
 //token de autenticação
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 
 //controller de autenticação
-const express = require("express");
+const express = require("express")
 
-const User = require("../model/Users/");
+const User = require("../model/Users/")
 //criptografia
-const bcript = require("bcryptjs");
+const bcript = require("bcryptjs")
 
 //pra gerar token da redefinição de senha, crypto ja e do node
-const crypto = require("crypto");
+const crypto = require("crypto")
 
 //imortar minha modulos de email
-const mailer = require("../../modules/mailer");
+const mailer = require("../../modules/mailer")
 
 //chamar a classe router para definir as rotas para usuario
-const router = express.Router();
+const router = express.Router()
 
 //config com o hash para gerar o token
-const authConfig = require("../../config/auth");
+const authConfig = require("../../config/auth")
 
 //para que seja feito o update do usuario ele precisa estar logado
 const middleware = require("../middlewares/auth")
@@ -38,13 +38,13 @@ function generateToken(params) {
 
 router.post("/register", async (req, res) => {
   //pegar o email
-  const { email } = req.body;
+  const { email } = req.body
   try {
     //retornar menssagem caso o email já tenha sido cadastrado
     if (await User.findOne(email))
-      return res.status(400).send({ error: "Email ja cadastrado" });
+      return res.status(400).send({ error: "Email ja cadastrado" })
 
-    const user = await User.create(req.body);
+    const user = await User.create(req.body)
     //remove o password quando dar erro pra ele não voltar e mostrar par ao usuario
     user.password = undefined;
 
@@ -55,7 +55,7 @@ router.post("/register", async (req, res) => {
     });
   } catch (err) {
     console.log(err)
-    return res.status(400).send({ error: "Register failed" });
+    return res.status(400).send({ error: "Register failed" })
   }
 });
 
@@ -66,20 +66,20 @@ router.post("/register", async (req, res) => {
 */
 
 router.post("/authenticate", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
   //o campo passwor foi marcado como select lá no model, então ele nao viria nessa requisição
   //mas preciso dele para validar, saber se o email e dele realmente, então adiciono esse select no final
-  const user = await User.findOne(email);
+  const user = await User.findOne(email)
   //verificar se o usuario existe se não
-  if (!user) return res.status(400).send({ error: "User not found!" });
+  if (!user) return res.status(400).send({ error: "User not found!" })
   //verificar se a senha e realmente do email
   //await por que demora então ela não e async por isso precisa
   //bcrypt.compare() por que a senha foi criptografada então tem que comparar com a cript.
   if (!(await bcript.compare(password, user.password)))
-    return res.status(400).send({ error: "Password is not valid!" });
+    return res.status(400).send({ error: "Password is not valid!" })
 
   //remover o password para não retornar para o usuario
-  user.password = undefined;
+  user.password = undefined
 
   //retorna essa informação para o usuario
   res.send({
@@ -100,7 +100,7 @@ router.put("/update", middleware, async (req, res, next) => {
   if (!user) return res.status(400).send({ error: "User not found!" })
 
   //others modifications
-  user.name = data.name;
+  user.name = data.name
 
   let Users = await User.updateUser(user)
   res.send(Users)
@@ -109,19 +109,19 @@ router.put("/update", middleware, async (req, res, next) => {
 //rota esqueci minha senha
 router.post("/forgot_password", async (req, res) => {
   //recebe o email
-  const { email } = req.body;
+  const { email } = req.body
 
   try {
-    const user = await User.findOne( email );
+    const user = await User.findOne( email )
 
-    if (!user) return res.status(400).send({ error: "User not found" });
+    if (!user) return res.status(400).send({ error: "User not found" })
 
     //preciso gerar um token , por que não e qualquer pessoa que pode acessar a pagina de redefinir a senha
-    const token = crypto.randomBytes(20).toString("hex");
+    const token = crypto.randomBytes(20).toString("hex")
     //pega a hora
-    const now = new Date();
+    const now = new Date()
     //soma mais uma nessa hora para o tempo de validação do token
-    now.setHours(now.getHours() + 1);
+    now.setHours(now.getHours() + 1)
 
     //alterando o usuario
     await User.findByIdAndUpdate(user.id, {
@@ -138,19 +138,19 @@ router.post("/forgot_password", async (req, res) => {
         context: { token }
       },
       err => {
-        if (err) console.log(err);
+        if (err) console.log(err)
         return res
           .status(400)
-          .send({ error: "Not posible send email" });
+          .send({ error: "Not posible send email" })
 
-        return res.send(err);
+        return res.send(err)
       }
     );
   } catch (err) {
     console.log(err)
-    res.status(400).send({ error: "Erro try again later" });
+    res.status(400).send({ error: "Erro try again later" })
   }
-});
+})
 
 //recumperando o app, para que esse controler possa usar essa rota dentro do app
 module.exports = app => app.use("/auth", router);

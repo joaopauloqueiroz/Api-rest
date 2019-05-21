@@ -10,7 +10,7 @@ router.use(middleware)
   Receive one object for create
   @object
 */
-router.get("/create", permission, async (req, res, next) => {
+router.post("/create", permission, async (req, res, next) => {
 	const { name } = req.body;
 
 	if(await Product.findOne(name))
@@ -36,7 +36,7 @@ router.get("/all", async (req, res, next) => {
 router.post("/find", async (req, res, next) => {
 	const {id} = req.body
 
-	if(isNaN(id) || id === '')
+	if(isNaN(id) || id === undefined)
 		return res.status(400).send({ error: "Id is not defined" })
 
 	let Products = await Product.find(id)
@@ -63,8 +63,8 @@ router.put("/update", async (req, res, next) => {
    @int
 */
 router.delete("/delete", async (req, res, next) => {
-	const {id} = req.body;
-	if(isNaN(id) || id === '')
+	const {id} = req.body
+	if(isNaN(id) || id === undefined)
 		return res.status(400).send({ error: "Id is not defined" })
 	let Products = await Product.deleteProd(id)
 	res.send({seccess: Products})

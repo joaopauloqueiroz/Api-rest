@@ -15,7 +15,7 @@ module.exports = {
 	  .catch(function (error) {
 	    console.log(error);
 	  });
-		return data;
+		return product;
 	},
 
 	findOne: async (name) => {
