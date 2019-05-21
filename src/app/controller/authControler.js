@@ -31,6 +31,11 @@ function generateToken(params) {
   });
 }
 
+/*
+  Receive one object for create
+  @object
+*/
+
 router.post("/register", async (req, res) => {
   //pegar o email
   const { email } = req.body;
@@ -54,7 +59,11 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//criar a rota de autenticação
+/*
+   Receive email and password
+   @param(email) @type(@String)
+   @param(password) @type(@String)
+*/
 
 router.post("/authenticate", async (req, res) => {
   const { email, password } = req.body;
@@ -79,6 +88,10 @@ router.post("/authenticate", async (req, res) => {
   });
 });
 
+/*
+  Receive one object data
+  @param(@object)
+*/
 router.put("/update", middleware, async (req, res, next) => {
   const id = req.userId
   let data = req.body

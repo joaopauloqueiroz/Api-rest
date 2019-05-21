@@ -6,7 +6,10 @@ const permission = require("../middlewares/permission")
 const Product = require("../model/Products/");
 
 router.use(middleware)
-
+/*
+  Receive one object for create
+  @object
+*/
 router.get("/create", permission, async (req, res, next) => {
 	const { name } = req.body;
 
@@ -17,11 +20,19 @@ router.get("/create", permission, async (req, res, next) => {
   res.send(Products)
 })
 
+
+/*
+   @notparams
+*/
 router.get("/all", async (req, res, next) => {
 	let Products = await Product.findAll()
 	res.send(Products)
 })
 
+/*
+   Receive  id
+   @int
+*/
 router.post("/find", async (req, res, next) => {
 	const {id} = req.body
 
@@ -32,6 +43,10 @@ router.post("/find", async (req, res, next) => {
 	res.send(Products)
 })
 
+/*
+   Receive  id
+   @int
+*/
 router.put("/update", async (req, res, next) => {
 	const {id} = req.body
 
@@ -43,7 +58,10 @@ router.put("/update", async (req, res, next) => {
 	res.send(Products)
 })
 
-
+/*
+   Receive  id
+   @int
+*/
 router.delete("/delete", async (req, res, next) => {
 	const {id} = req.body;
 	if(isNaN(id) || id === '')
