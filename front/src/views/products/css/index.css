@@ -20,3 +20,7 @@
 .actios-icons div span{
     color: #000 !important;
 }
+
+.btn_create {
+    float: right;
+}

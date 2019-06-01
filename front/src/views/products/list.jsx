@@ -92,15 +92,25 @@ alertDelete(id){
     return (
      <GridContainer className="container-form">
         {this.state.alert}
+        <GridItem md={6}>
+          <CardIcon color="warning">
+          <Icon className="size_icons">list</Icon>
+      </CardIcon>
+      </GridItem>
+      <GridItem md={6}>
+        <div className="btn_create">
+      <Button round color="danger" onClick={() => this.props.history.push('/create-product')}>
+        {"CADASTRAR"}
+      </Button>
+        </div>
+      </GridItem>
        <GridItem md={12}>
-       <CardIcon color="warning">
-       <Icon className="size_icons">list</Icon>
-     </CardIcon>
           <Table>
           <TableHead>
                   <TableRow>
                     <TableCell>NOME</TableCell>
                     <TableCell>PREÇO</TableCell>
+                    <TableCell>QUANTIDADE</TableCell>
                     <TableCell>DESCRIÇÃO </TableCell>
                     <TableCell>ACTION </TableCell>
                   </TableRow>
@@ -111,6 +121,7 @@ alertDelete(id){
                 <TableRow>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.price}</TableCell>
+                <TableCell>{item.quantity}</TableCell>
                 <TableCell>{item.description}</TableCell>
                 <TableCell>
                   <div className="actios-icons">
@@ -129,8 +140,7 @@ alertDelete(id){
               )
             })}
           </Table>
-       </GridItem>    
-       {/* <a onClick={() => this.props.history.push('/create-product')} >Cadastrar</a> */}
+       </GridItem>
      </GridContainer>
     )
   }

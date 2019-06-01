@@ -36,11 +36,11 @@ class FormProduct extends Component {
     constructor(props){
         super(props)
         this.state = {
-            name: this.props.item.name ? this.props.item.name : '',
-            price: this.props.item.price ? this.props.item.price : '',
-            quantity: this.props.item.quantity ? this.props.item.quantity : '',
-            description: this.props.item.description ? this.props.item.description: '',
-            id: this.props.item.id ? this.props.item.id : undefined,
+            name: this.props.item ? this.props.item.name : '',
+            price: this.props.item ? this.props.item.price : '',
+            quantity: this.props.item ? this.props.item.quantity : '',
+            description: this.props.item ? this.props.item.description: '',
+            id: this.props.item ? this.props.item.id : undefined,
         }
     }
 
