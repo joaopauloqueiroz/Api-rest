@@ -30,6 +30,12 @@ const list = async () => {
     }
 }
 
+/**
+ * 
+ * @param {object} data 
+ * update item
+ */
+
 const update = async (data) => {
     try {
         const response = await api.put('/products/update', data)
@@ -39,8 +45,18 @@ const update = async (data) => {
     }
 }
 
+const deleted = async (id) => {
+    try {
+        const response = await api.delete('/products/delete', {id})
+        // return true
+    } catch (error) {
+        console.log(error.response)
+    }
+}
+
 export {
     create,
     list,
-    update
+    update,
+    deleted
 }

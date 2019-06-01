@@ -49,7 +49,6 @@ router.post("/find", async (req, res, next) => {
 */
 router.put("/update", async (req, res, next) => {
 	const {id} = req.body
-
 	if(isNaN(id) || id === '')
 		return res.status(400).send({ error: "Id is not defined" })
 
@@ -63,7 +62,8 @@ router.put("/update", async (req, res, next) => {
    @int
 */
 router.delete("/delete", async (req, res, next) => {
-	const {id} = req.body
+	const {id} = req.body;
+	console.log(req.body)
 	if(isNaN(id) || id === undefined)
 		return res.status(400).send({ error: "Id is not defined" })
 	let Products = await Product.deleteProd(id)

@@ -14,8 +14,9 @@
 .actios-icons div{
     margin: 3px;
     cursor: pointer;
+    color: #000 !important;
 }
 
-.size_icons {
-    font-size: 45px !important;
+.actios-icons div span{
+    color: #000 !important;
 }

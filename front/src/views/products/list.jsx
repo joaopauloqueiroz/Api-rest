@@ -17,6 +17,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardText from "components/Card/CardText.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Deleted from "components/Deleted"
 import Icon from "@material-ui/core/Icon";
 import {Link} from "react-router-dom"
 
@@ -30,14 +31,15 @@ import {Link} from "react-router-dom"
   * Functions
   */
 
-  import {list} from "functions/products/"
+  import {list, deleted} from "functions/products/"
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 
 class List extends Component {
     constructor(props){
         super(props)
         this.state = {
-            products: []
+            products: [],
+            alert: false,
         }
     }
 
@@ -52,10 +54,44 @@ async listProducts() {
     })
 }
 
+removeItemArray (id) {
+  let data = this.state.products
+  let index = data.find(item => item.id === id)
+  data.splice(index, 1)
+
+  this.setState({
+    alert: false,
+    products: data,
+  })
+}
+
+onConfirm = async (id) => {
+  await deleted(id)
+  this.removeItemArray(id)
+}
+
+onCancel(){
+  this.setState({
+    alert: false,
+  })
+}
+alertDelete(id){
+  this.setState({
+    alert: <Deleted 
+    msg={'Tem serteza que deseja deletar este produto? '} 
+    values={id} 
+    onConfirm={this.onConfirm.bind(this)}
+    onCancel={this.onCancel.bind(this)}
+    />
+  })
+}
+
+
   render() {
       const {classes} = this.props;
     return (
      <GridContainer className="container-form">
+        {this.state.alert}
        <GridItem md={12}>
        <CardIcon color="warning">
        <Icon className="size_icons">list</Icon>
@@ -83,10 +119,8 @@ async listProducts() {
                         <Icon>edit_outline</Icon>
                       </Link>
                     </div>
-                    <div title="Deletar item">
-                    <Link to="/create-product" >
+                    <div title="Deletar item" onClick={() => this.alertDelete(item.id)}>
                         <Icon>delete_outline</Icon>
-                      </Link>
                     </div>
                   </div>
                 </TableCell>
