@@ -25,17 +25,17 @@ const switchRoutes = (
   <Switch>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
-        return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
+        return <Redirect from={prop.path} to={prop.pathTo} key={key} />
       if (prop.collapse)
         return prop.views.map((prop, key) => {
           return (
             <Route path={prop.path} component={prop.component} key={key} />
-          );
-        });
-      return <Route path={prop.path} component={prop.component} key={key} />;
+          )
+        })
+      return <Route path={prop.path} component={prop.component} key={key} />
     })}
   </Switch>
-);
+)
 
 var ps;
 

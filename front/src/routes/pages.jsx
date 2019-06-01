@@ -11,7 +11,7 @@ import LockOpen from "@material-ui/icons/LockOpen";
 
 const pagesRoutes = [
   {
-    path: "/pages/register-page",
+    path: "/register",
     name: "Register Page",
     short: "Register",
     mini: "RP",
@@ -19,7 +19,7 @@ const pagesRoutes = [
     component: RegisterPage
   },
   {
-    path: "/pages/login-page",
+    path: "/login",
     name: "Login Page",
     short: "Login",
     mini: "LP",
@@ -27,7 +27,7 @@ const pagesRoutes = [
     component: LoginPage
   },
   {
-    path: "/pages/pricing-page",
+    path: "/pricing",
     name: "Pricing Page",
     short: "Pricing",
     mini: "PP",
@@ -35,7 +35,7 @@ const pagesRoutes = [
     component: PricingPage
   },
   {
-    path: "/pages/lock-screen-page",
+    path: "/lock-screen",
     name: "Lock Screen Page",
     short: "Lock",
     mini: "LSP",

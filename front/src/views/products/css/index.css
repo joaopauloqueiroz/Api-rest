@@ -6,3 +6,16 @@
     background-color: #fff;
 }
 
+.actios-icons {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+}
+.actios-icons div{
+    margin: 3px;
+    cursor: pointer;
+}
+
+.size_icons {
+    font-size: 45px !important;
+}

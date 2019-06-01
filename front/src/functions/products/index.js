@@ -10,6 +10,7 @@ import api from "api/"
  */
 const create = async (form) => {
     try {
+        delete form.id;
         const resp = await api.post('/products/create', form)
         return resp
     } catch (error) {
@@ -22,8 +23,17 @@ const create = async (form) => {
  */
 const list = async () => {
     try {
-        const resp = await api.get('/products/list')
+        const resp = await api.get('/products/all')
         return resp
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const update = async (data) => {
+    try {
+        const response = await api.put('/products/update', data)
+        return response.data
     } catch (error) {
         console.log(error)
     }
@@ -31,5 +41,6 @@ const list = async () => {
 
 export {
     create,
-    list
+    list,
+    update
 }

@@ -22,13 +22,20 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle.jsx";
+/**
+ * Database requisition
+ */
+
+ import {logar} from 'functions/LoginRegister'
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    // we use this to make the card to appear after the page has been rendered
     this.state = {
-      cardAnimaton: "cardHidden"
+      cardAnimaton: "cardHidden",
+      email: '',
+      password: '',
+      error: '',
     };
   }
   componentDidMount() {
@@ -44,8 +51,24 @@ class LoginPage extends React.Component {
     clearTimeout(this.timeOutFunction);
     this.timeOutFunction = null;
   }
+
+  async logar(){
+    let form = this.state;
+    delete form.cardAnimaton;
+    delete form.error
+    let login = await logar(form)
+    if(login.success){
+      window.location.href = '/list-products'
+    }else{
+      this.setState({
+        error: login.data.error,
+      })
+    }
+  }
+
   render() {
     const { classes } = this.props;
+    const {email, password} = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -77,20 +100,9 @@ class LoginPage extends React.Component {
                   </div>
                 </CardHeader>
                 <CardBody>
-                  <CustomInput
-                    labelText="First Name.."
-                    id="firstname"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Face className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                <div className="alert alert-danger">
+                  {this.state.error}
+                </div>
                   <CustomInput
                     labelText="Email..."
                     id="email"
@@ -98,6 +110,10 @@ class LoginPage extends React.Component {
                       fullWidth: true
                     }}
                     inputProps={{
+                      type: 'email',
+                      name: 'email',
+                      value: email,
+                      onChange: e => this.setState({[e.target.name]: e.target.value }),
                       endAdornment: (
                         <InputAdornment position="end">
                           <Email className={classes.inputAdornmentIcon} />
@@ -112,6 +128,10 @@ class LoginPage extends React.Component {
                       fullWidth: true
                     }}
                     inputProps={{
+                      type: 'password',
+                      name: 'password',
+                      value: password,
+                      onChange: e => this.setState({[e.target.name]: e.target.value }),
                       endAdornment: (
                         <InputAdornment position="end">
                           <Icon className={classes.inputAdornmentIcon}>
@@ -123,8 +143,8 @@ class LoginPage extends React.Component {
                   />
                 </CardBody>
                 <CardFooter className={classes.justifyContentCenter}>
-                  <Button color="rose" simple size="lg" block>
-                    Let's Go
+                  <Button color="rose" size="lg" block onClick={() => this.logar()}>
+                   LOGIN
                   </Button>
                 </CardFooter>
               </Card>

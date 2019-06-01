@@ -4,7 +4,7 @@ import { getToken } from '../auth';
  * Create base url for requisition api
  */
 const api = axios.create({
-    baseURL: "http://localhost:3000"
+    baseURL: "http://localhost:3001"
 })
 
 /**

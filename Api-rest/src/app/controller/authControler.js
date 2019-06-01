@@ -88,9 +88,19 @@ router.post("/authenticate", async (req, res) => {
   });
 });
 
-/*
-  Receive one object data
-  @param(@object)
+/**
+ * @param token
+ * 
+ */
+
+ router.get('/authentic', middleware, async (req, res, next) => {
+   res.send({success: true})
+ })
+
+
+/** 
+ * Receive one object data
+ * @param(@object)
 */
 router.put("/update", middleware, async (req, res, next) => {
   const id = req.userId

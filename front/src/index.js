@@ -7,6 +7,11 @@ import Pages from "layouts/Pages.jsx";
 import RTL from "layouts/RTL.jsx";
 import Dashboard from "layouts/Dashboard.jsx";
 
+/**
+ * @js Api
+ */
+import {auth} from "functions/LoginRegister"
+
 const hist = createBrowserHistory();
 
 const renderPrivate = () => {
@@ -25,7 +30,10 @@ const renderPublic = () => {
   ReactDOM.render(
     <Router history={hist}>
       <Switch>
-        <Route path={"/login"} component={Pages} key={"key-lg"} />;
+        <Route path={"/login"} component={Pages} key={"key-lg"} />
+        <Route path={"/register"} component={Pages} key={"key-lg"} />
+        <Route path={"/pricing"} component={Pages} key={"key-lg"} />
+        <Route path={"/lock-screen"} component={Pages} key={"key-lg"} />
         <Redirect from="/" to="/login" />
       </Switch>
     </Router>,
@@ -34,8 +42,9 @@ const renderPublic = () => {
 }
 
 
- const switches = async () => {
-  if(true){
+const switches = async () => {
+  let valid = await auth()
+  if(valid){
     renderPrivate()
   }else{
     renderPublic()
