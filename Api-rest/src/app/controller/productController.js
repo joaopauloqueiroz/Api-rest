@@ -4,14 +4,28 @@ const router = express.Router()
 const middleware = require("../middlewares/auth")
 const permission = require("../middlewares/permission")
 const Product = require("../model/Products/");
-
+const {validate} = require('../middlewares/validator')
+const {validationHandler} = require('../services/')
 router.use(middleware)
 /*
   Receive one object for create
   @object
 */
-router.post("/create", permission, async (req, res, next) => {
+router.post("/create", [permission, validate('createProduct')], async (req, res, next) => {
 	const { name } = req.body;
+	req.body.create_at = new Date()
+	req.body.update_at = new Date()
+	let errors = await req.getValidationResult()
+	
+	if(errors.mapped()){
+		erros = []
+		for(let x in errors.mapped()){
+			erros.push({
+				 ...errors.mapped()[x]
+			})
+		}
+		res.status(400).send({errors: erros})
+	}
 
 	if(await Product.findOne(name))
 		return res.status(400).send({ error: "Produto já cadastrado" });
@@ -61,9 +75,8 @@ router.put("/update", async (req, res, next) => {
    Receive  id
    @int
 */
-router.delete("/delete", async (req, res, next) => {
-	const {id} = req.body;
-	console.log(req.body)
+router.delete("/delete/:id", async (req, res, next) => {
+	const {id} = req.params
 	if(isNaN(id) || id === undefined)
 		return res.status(400).send({ error: "Id is not defined" })
 	let Products = await Product.deleteProd(id)

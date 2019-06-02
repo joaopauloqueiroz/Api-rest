@@ -14,7 +14,7 @@ const create = async (form) => {
         const resp = await api.post('/products/create', form)
         return resp
     } catch (error) {
-        console.log(error)
+        return error.response
     }
 }
 
@@ -47,7 +47,7 @@ const update = async (data) => {
 
 const deleted = async (id) => {
     try {
-        const response = await api.delete('/products/delete', {id})
+        const response = await api.delete(`/products/delete/${id}`)
         // return true
     } catch (error) {
         console.log(error.response)

@@ -29,6 +29,8 @@ onConfirm () {
       <div className="pai-sweet">
         <SweetAlert
             title={this.props.title}
+            onConfirm={() => {}}
+            onCancel={() => {}}
             warning
             style={{
                 display: "block",

@@ -24,3 +24,18 @@
 .btn_create {
     float: right;
 }
+
+.alert-danger {
+    margin-top: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border: 0.1px solid;
+    padding: 5px;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.alert-danger li {
+    margin-left: 5px;
+}

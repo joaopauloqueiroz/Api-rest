@@ -56,7 +56,7 @@ async listProducts() {
 
 removeItemArray (id) {
   let data = this.state.products
-  let index = data.find(item => item.id === id)
+  let index = data.findIndex(item => item.id === id)
   data.splice(index, 1)
 
   this.setState({
@@ -79,6 +79,7 @@ alertDelete(id){
   this.setState({
     alert: <Deleted 
     msg={'Tem serteza que deseja deletar este produto? '} 
+    title={'ATENÇÃO'}
     values={id} 
     onConfirm={this.onConfirm.bind(this)}
     onCancel={this.onCancel.bind(this)}

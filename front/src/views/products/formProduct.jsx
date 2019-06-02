@@ -30,7 +30,7 @@ import Back from 'components/back'
   * Functions
   */
 
-  import {create, update} from "functions/products/"
+import {create, update} from "functions/products/"
 
 class FormProduct extends Component {
     constructor(props){
@@ -41,17 +41,39 @@ class FormProduct extends Component {
             quantity: this.props.item ? this.props.item.quantity : '',
             description: this.props.item ? this.props.item.description: '',
             id: this.props.item ? this.props.item.id : undefined,
+            errors: [],
         }
     }
 
-async createProduct() {
+async createProduct(param) {
     if(this.state.id === undefined){
         const response = await create(this.state)
+        if(response.data.errors){
+            this.setState({
+                errors: response.data.errors,
+            })
+            return false;
+        }
+        if(param){
+            this.clearAll()
+        }else{
+            this.props.props.history.push('/list-products')
+        }
     }else{
         let form = this.state;
         const resp = await update(form)
         this.props.props.history.push('/list-products')
     }
+}
+
+clearAll(){
+    this.setState({
+        name: '',
+        price: '',
+        quantity: '',
+        description: '',
+        id: undefined,
+    })
 }
 
 componentDidMount(){
@@ -73,18 +95,29 @@ componentDidUpdate(prevProps, prevState){
   render() {
     const {classes} = this.props;
     const {name, price, quantity, description} = this.state;
-        return (
+    return (
         <div>
         <Back />
         <br />
         <br />
         <GridContainer className="container-form">
-        <GridItem md={12}>
+        <GridItem md={12} xs={12} sm={12}>
             <CardIcon color="warning">
                 <Icon>content_copy</Icon>
             </CardIcon>
         </GridItem>
-            <GridItem xs={12} sm={2} md={6}>
+        <GridItem md={12} xs={12} sm={12}>
+        {this.state.errors.length > 0 ? (
+        <div className="alert alert-danger">
+            {this.state.errors.map((item, i) => {
+                return (
+                    <li key={item+i} >{item.msg}</li>
+                )
+            })}
+            </div>
+            ) : null}
+        </GridItem>
+            <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
                     error={
                         this.state.error === "error" ||
@@ -104,7 +137,7 @@ componentDidUpdate(prevProps, prevState){
                     }}
                 />
             </GridItem>
-            <GridItem xs={12} sm={2} md={6}>
+            <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
                     error={
                         this.state.error === "error" ||
@@ -124,7 +157,7 @@ componentDidUpdate(prevProps, prevState){
                     }}
                 />
             </GridItem>
-            <GridItem xs={12} sm={2} md={6}>
+            <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
                     error={
                         this.state.error === "error" ||
@@ -144,7 +177,7 @@ componentDidUpdate(prevProps, prevState){
                     }}
                 />
             </GridItem>
-            <GridItem xs={12} sm={2} md={12}>
+            <GridItem xs={12} sm={12} md={12}>
                 <CustomInput
                     error={
                         this.state.error === "error" ||
@@ -167,8 +200,14 @@ componentDidUpdate(prevProps, prevState){
             <GridItem md={12} xs={12} sm={12}>
                 <div className={classes.center}>
                     <Button round color="danger" onClick={() => this.createProduct()}>
-                        {"CADASTRAR"}
+                        {this.state.id === undefined ? <Icon>fiber_new</Icon> : <Icon>edit</Icon>}
                     </Button>
+                    &nbsp;
+                    {this.state.id === undefined ? (
+                        <Button round color="danger" onClick={() => this.createProduct(true)}>
+                        <Icon>add_circle</Icon>
+                    </Button>
+                    ) : null}
                 </div>
             </GridItem>
         </GridContainer>
