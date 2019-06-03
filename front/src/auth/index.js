@@ -33,4 +33,9 @@ const tokenAuth = async () => {
     }
 }
 
-export { isAuthenticated, getToken, setLogin, logout }
+const setUser = async (values) => {
+    delete values.token
+    localStorage.setItem('name', values.name)
+}
+
+export { isAuthenticated, getToken, setLogin, logout, setUser }

@@ -65,10 +65,22 @@ class Sidebar extends React.Component {
       openTables: this.activeRoute("/tables"),
       openMaps: this.activeRoute("/maps"),
       openPages: this.activeRoute("-page"),
-      miniActive: true
+      miniActive: true,
+      name: '',
+      image: '',
     };
     this.activeRoute.bind(this);
   }
+  componentDidMount(){
+    let sidebar = localStorage.getItem('name')
+      this.setState({
+      //   image: sidebar.image,
+        name: sidebar
+      })
+
+      console.log(sidebar)
+  }
+
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
     return this.props.location.pathname.indexOf(routeName) > -1 ? true : false;
@@ -145,7 +157,7 @@ class Sidebar extends React.Component {
               onClick={() => this.openCollapse("openAvatar")}
             >
               <ListItemText
-                primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
+                primary={rtlActive ? "تانيا أندرو" : this.state.name}
                 secondary={
                   <b
                     className={

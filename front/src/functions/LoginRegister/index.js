@@ -6,7 +6,7 @@ import api from "api/"
  /**
   * @js Auth
   */
- import {setLogin} from "auth"
+ import {setLogin, setUser} from "auth"
 
 /**
  * Função para fazer login
@@ -18,7 +18,8 @@ import api from "api/"
         const response = await api.post('/auth/authenticate', form)
         if(response.data.token){
             setLogin(response.data.token)
-            return {success: true, data: response.data}
+            await setUser(response.data.user)
+         return {success: true, data: response.data}
         }
         
     } catch (error) {

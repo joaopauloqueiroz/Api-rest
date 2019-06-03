@@ -51,7 +51,7 @@ router.post("/register", async (req, res) => {
     //envia o token e o user
     return res.send({
       user,
-      token: generateToken({ id: user.id })
+      token: generateToken({ id: user.id, name: user.name, email: user.email })
     });
   } catch (err) {
     console.log(err)
@@ -84,7 +84,7 @@ router.post("/authenticate", async (req, res) => {
   //retorna essa informação para o usuario
   res.send({
     user,
-    token: generateToken({ id: user.id, admin: user.admin })
+    token: generateToken({ id: user.id})
   });
 });
 

@@ -57,13 +57,13 @@ class LoginPage extends React.Component {
     delete form.cardAnimaton;
     delete form.error
     let login = await logar(form)
-    if(login.success){
-      window.location.href = '/list-products'
-    }else{
-      this.setState({
-        error: login.data.error,
-      })
-    }
+      if(login.success){
+          window.location.href = '/list-products'
+        }else{
+          this.setState({
+            error: login.data.error,
+          })
+        }
   }
 
   render() {
@@ -100,9 +100,11 @@ class LoginPage extends React.Component {
                   </div>
                 </CardHeader>
                 <CardBody>
-                <div className="alert alert-danger">
+                {this.state.error ? (
+                  <div className="alert alert-danger">
                   {this.state.error}
                 </div>
+                ): null}
                   <CustomInput
                     labelText="Email..."
                     id="email"
