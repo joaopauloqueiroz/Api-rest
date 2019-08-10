@@ -1,7 +1,5 @@
 import api from "../api/index.js";
 const TOKEN_KEY = 'AUTH_TOKEN_KEY'
-// const jwt = require("jsonwebtoken")
-
 
 const isAuthenticated = () => {
     let token = localStorage.getItem(TOKEN_KEY);

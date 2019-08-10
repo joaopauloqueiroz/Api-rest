@@ -9,6 +9,7 @@
   "author": "Joao paulo queiroz",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.18.2",
     "cors": "^2.8.5",
@@ -19,6 +20,12 @@
     "mongoose": "^4.10.8",
     "neo4j-driver": "^1.7.2",
     "nodemailer": "^4.6.2",
-    "nodemailer-express-handlebars": "^3.0.0"
+    "nodemailer-express-handlebars": "^3.0.0",
+    "pg": "^7.12.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.12.2"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.5.0"
   }
 }

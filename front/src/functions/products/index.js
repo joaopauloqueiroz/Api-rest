@@ -54,9 +54,19 @@ const deleted = async (id) => {
     }
 }
 
+const findOne = async (id) => {
+    try {
+        const response = await api.post(`/products/find`, {id})
+        return response.data;
+    } catch (error) {
+        console.log(error.response)
+    }
+}
+
 export {
     create,
     list,
     update,
-    deleted
+    deleted,
+    findOne
 }

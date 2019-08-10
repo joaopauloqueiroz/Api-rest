@@ -225,6 +225,7 @@ class Sidebar extends React.Component {
                       primary={rtlActive ? "إعدادات" : "Settings"}
                       disableTypography={true}
                       className={collapseItemText}
+                      // onClick={localStorage.clear()}
                     />
                   </NavLink>
                 </ListItem>

@@ -12,6 +12,8 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardText from "components/Card/CardText.jsx";
@@ -30,17 +32,18 @@ import Back from 'components/back'
   * Functions
   */
 
-import {create, update} from "functions/products/"
+import {create, update, findOne} from "functions/products/"
 
 class FormProduct extends Component {
     constructor(props){
         super(props)
         this.state = {
-            name: this.props.item ? this.props.item.name : '',
-            price: this.props.item ? this.props.item.price : '',
-            quantity: this.props.item ? this.props.item.quantity : '',
-            description: this.props.item ? this.props.item.description: '',
-            id: this.props.item ? this.props.item.id : undefined,
+            name: '',
+            price: '',
+            quantity: '',
+            description: '',
+            type: '',
+            id: this.props.item.id,
             errors: [],
         }
     }
@@ -48,9 +51,12 @@ class FormProduct extends Component {
 async createProduct(param) {
     if(this.state.id === undefined){
         const response = await create(this.state)
-        if(response.data.errors){
+        let errors = response.data.errors || [];
+        let permission = response.data.error || [];
+        if(response.data.errors || response.data.error){
             this.setState({
-                errors: response.data.errors,
+                errors: errors,
+                permission,
             })
             return false;
         }
@@ -71,30 +77,33 @@ clearAll(){
         name: '',
         price: '',
         quantity: '',
+        type: '',
         description: '',
         id: undefined,
     })
 }
 
 componentDidMount(){
-
-}
-componentDidUpdate(prevProps, prevState){
-    if(prevProps !== this.props){
-        this.setState({
-            name: this.props.item.name ? this.props.item.name : '',
-            price: this.props.item.price ? this.props.item.prcie : '',
-            quantity: this.props.item.quantity ? this.props.item.quantity : '',
-            description: this.props.item.description ? this.props.item.description: '',
-            id: this.props.item.id ? this.props.item.id : '', 
-        })
+    if(this.state.id){
+       this.init(); 
     }
+}
+// componentDidUpdate(prevProps, prevState){
+//     if(prevProps !== this.props){
+//         if(this.props.id !== prevProps.id){
+//             this.init();
+//         }
+//     }
+// }
 
+async init(){
+    const response = await findOne(this.state.id)
+    console.log(response)
 }
 
   render() {
     const {classes} = this.props;
-    const {name, price, quantity, description} = this.state;
+    const {name, price, quantity, description, errors} = this.state;
     return (
         <div>
         <Back />
@@ -116,6 +125,13 @@ componentDidUpdate(prevProps, prevState){
             })}
             </div>
             ) : null}
+
+            {this.state.permission ? (
+                <div className="alert alert-danger">
+                    {this.state.permission}
+                </div>
+            ) : null}
+
         </GridItem>
             <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
@@ -176,6 +192,23 @@ componentDidUpdate(prevProps, prevState){
                         onChange: e => this.setState({[e.target.name]: e.target.value})
                     }}
                 />
+            </GridItem>
+
+            <GridItem xs={12} sm={12} md={6}>
+            <div className="form-group">
+                <Select
+                    inputProps={{
+                        name: 'age',
+                        id: 'age-simple',
+                    }}
+                    
+                    fullWidth={true}
+                    >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+            </div>
             </GridItem>
             <GridItem xs={12} sm={12} md={12}>
                 <CustomInput
